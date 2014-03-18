@@ -1,0 +1,25 @@
+{
+  "name": "gulp-aws-s3",
+  "version": "0.0.1",
+  "description": "A plugin for Gulp that uploads files to Amazon's S3 service",
+  "keywords": [
+    "gulpplugin",
+    "gulp",
+    "aws",
+    "s3"
+  ],
+  "author": {
+    "name": "Matt Benton <matt@mattbenton.com>"
+  },
+  "main": "./index.js",
+  "dependencies": {
+    "event-stream": "*",
+    "gulp-util": "^2.2.14",
+    "through2": "^0.4.1",
+    "knox": "^0.8.9"
+  },
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": ">=1.2.10"
+  }
+}

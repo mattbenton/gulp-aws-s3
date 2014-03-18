@@ -24,6 +24,8 @@ Create a JSON file with your AWS credentials and bucket name:
 
 ## Usage
 
+Upload javascript to S3 with some cache headers:
+
 ```js
 var s3 = require('gulp-aws-s3');
 
@@ -34,6 +36,27 @@ gulp.task('deploy', function () {
     'headers': {
       'Cache-Control': 'max-age=315360000, no-transform, public',
       'Content-Type': 'application/javascript',
+    },
+    'uploadPath': 'some/subdirectory/'
+  };
+
+  return gulp.src('./dist/*.js')
+    .pipe(s3(aws, options));
+});
+```
+
+Upload gzipped javascript to S3:
+
+```js
+var s3 = require('gulp-aws-s3');
+var gzip = require('gulp-gzip');
+
+gulp.task('deploy', function () {
+  var aws = JSON.parse(fs.readFileSync('aws.json'));
+
+  var options = {
+    'headers': {
+      'Content-Type': 'application/javascript',
       'Content-Encoding': 'gzip'
     },
     'uploadPath': 'some/subdirectory/'
@@ -41,9 +64,6 @@ gulp.task('deploy', function () {
 
   return gulp.src('./dist/*.js')
     .pipe(gzip())
-    .pipe(rename('platform.js'))
     .pipe(s3(aws, options));
 });
 ```
-
-

@@ -2,6 +2,7 @@
 var through = require('through2');
 var gutil = require('gulp-util');
 var knox = require('knox');
+var path = require('path');
 var PluginError = gutil.PluginError;
 
 // Consts
@@ -31,7 +32,7 @@ function gulpAwsS3 ( aws, options ) {
       // Do nothing if no contents
     }
 
-    var uploadPath = file.path.replace(file.base, options.uploadPath || '');
+    var uploadPath = path.join(options.uploadPath || '', path.basename(file.path));
 
     var method = null;
     if ( file.isBuffer() ) {

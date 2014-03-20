@@ -43,10 +43,14 @@ function gulpAwsS3 ( aws, options ) {
 
     if ( method ) {
       client[method](file.contents, uploadPath, headers, function ( err, res ) {
+        var basename = file.path.replace(file.cwd, '');
+        var uploadUrl = res && res.socket && res.socket._httpMessage && res.socket._httpMessage.url;
+        var uploadMessage = basename + ' --> ' + uploadUrl;
+
         if ( err || res.statusCode !== 200 ) {
-          gutil.log(gutil.colors.red('[FAILED]', file.path));
+          gutil.log(gutil.colors.red('[FAILED]', uploadMessage));
         } else {
-          gutil.log(gutil.colors.green('[SUCCESS]', file.path));
+          gutil.log(gutil.colors.green('[SUCCESS]', uploadMessage));
           res.resume();
         }
       });

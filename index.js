@@ -33,6 +33,8 @@ function gulpAwsS3 ( aws, options ) {
     }
 
     var uploadPath = path.join(options.uploadPath || '', path.basename(file.path));
+    // Fix for Windows.
+    uploadPath = uploadPath.replace(/\\/g, '/');
 
     var method = null;
     if ( file.isBuffer() ) {
